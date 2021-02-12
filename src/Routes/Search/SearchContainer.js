@@ -7,20 +7,28 @@ export default class extends Component {
     state = {
         movieResults: null,
         tvResults: null,
-        searchTerm: "code",
+        searchTerm: "",
         error: null,
         loading: true
     };
 
-    componentDidMount() {
-        this.handleSubmit();
-    }
+    // componentDidMount() {
+    //     this.handleSubmit();
+    // }
 
-    handleSubmit = () => {
+    handleSubmit = (event) => {
+        event.preventDefault();
         const { searchTerm } = this.state;
         if(searchTerm !== ""){
             this.searchByTerm(searchTerm);
         }
+    }
+
+    updateTerm = (event) => {
+        const { target: { value } } = event;
+        this.setState({
+            searchTerm: value
+        })
     }
 
     searchByTerm = async() => {
@@ -52,6 +60,7 @@ export default class extends Component {
                 loading={loading}
                 error={error}
                 handleSubmit={this.handleSubmit}
+                updateTerm={this.updateTerm}
             />
         )
     }
